@@ -1,0 +1,16 @@
+{
+    "name": "soapbox/agenda-template-client",
+    "description": "Client to communicate with the SoapBox Agenda Template Service",
+    "type": "library",
+    "require": {
+        "jshayes/fake-requests": "^2.3",
+        "art4/json-api-client": "^0.10.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mooree1892",
+            "email": "mooree1892@users.noreply.github.com"
+        }
+    ]
+}

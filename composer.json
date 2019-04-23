@@ -22,10 +22,17 @@
        "psr-4": {
            "SoapBox\\AgendaTemplateClient\\": "src/"
        }
-   },
-   "autoload-dev": {
+    },
+    "autoload-dev": {
        "psr-4": {
            "Tests\\": "tests/"
        }
-   }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SoapBox\\AgendaTemplateClient\\AgendaTemmplateClientServiceProvider"
+            ],
+        }
+    },
 }

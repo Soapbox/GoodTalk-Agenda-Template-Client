@@ -29,12 +29,12 @@ class Client
     public function __construct(ClientFactory $factory)
     {
         $this->client = $factory->make([
-            'base_uri' => 'agenda-templates.services.soapboxdev.com/api/',
+            'base_uri' => config('agenda-template-client.base_url'),
             'headers' => [
                 'Accept' => 'application/json',
             ],
-            'connect_timeout' => config('notifications.http.connect_timeout'),
-            'timeout' => config('notifications.http.timeout'),
+            'connect_timeout' => config('agenda-template-client.http.connect_timeout'),
+            'timeout' => config('agenda-template-client.http.timeout'),
         ]);
     }
 

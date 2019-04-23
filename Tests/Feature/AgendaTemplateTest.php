@@ -36,7 +36,7 @@ class AgendaTemplateTest extends TestCase
         $response = new SimpleAgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/1')
+        $handler->get('agenda-templates/1')
             ->respondWith($response);
 
         $client = resolve(Client::class);
@@ -58,7 +58,7 @@ class AgendaTemplateTest extends TestCase
         $response = new AgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/1')
+        $handler->get('agenda-templates/1')
             ->respondWith($response);
 
         $client = resolve(Client::class);
@@ -99,7 +99,7 @@ class AgendaTemplateTest extends TestCase
         $response = new AgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/1')
+        $handler->get('agenda-templates/1')
             ->respondWith($response);
 
         $client = resolve(Client::class);

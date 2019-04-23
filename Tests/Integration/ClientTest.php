@@ -19,7 +19,7 @@ class ClientTest extends TestCase
     public function it_can_get_an_agenda_template()
     {
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/1')
+        $handler->get('agenda-templates/1')
             ->respondWith(new AgendaTemplateResponse());
 
         $client = resolve(Client::class);
@@ -35,7 +35,7 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/99')
+        $handler->get('agenda-templates/99')
             ->respondWith(404);
 
         $client = resolve(Client::class);
@@ -50,7 +50,7 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates.services.soapboxdev.com/api/agenda-templates/99')
+        $handler->get('agenda-templates/99')
             ->respondWith(500);
 
         $client = resolve(Client::class);

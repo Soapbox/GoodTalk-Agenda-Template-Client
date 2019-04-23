@@ -5,7 +5,7 @@
     "require": {
         "jshayes/fake-requests": "^2.3",
         "art4/json-api-client": "^0.10.0",
-        "illuminate/support": "^5.8"
+        "illuminate/support": "^5.7"
     },
     "license": "MIT",
     "authors": [

@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "jshayes/fake-requests": "^2.3",
-        "art4/json-api-client": "^0.10.0"
+        "art4/json-api-client": "^0.10.0",
+        "illuminate/support": "^5.8"
     },
     "license": "MIT",
     "authors": [
@@ -12,5 +13,19 @@
             "name": "mooree1892",
             "email": "mooree1892@users.noreply.github.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^3.8",
+        "phpunit/phpunit": "^8.1"
+    },
+    "autoload": {
+       "psr-4": {
+           "SoapBox\\AgendaTemplateClient\\": "src/"
+       }
+   },
+   "autoload-dev": {
+       "psr-4": {
+           "Tests\\": "tests/"
+       }
+   }
 }

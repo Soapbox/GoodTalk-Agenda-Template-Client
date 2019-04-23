@@ -3,7 +3,7 @@ namespace SoapBox\AgendaTemplateClient;
 
 use Illuminate\Support\ServiceProvider;
 
-class AgendaTemmplateClientServiceProvider extends ServiceProvider
+class AgendaTemplateClientServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.

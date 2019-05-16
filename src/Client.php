@@ -38,10 +38,18 @@ class Client
         ]);
     }
 
-    public function getAgendaTemplate(int $id): AgendaTemplate
+    /**
+     * Retrieve an agenda using slug using agenda template API
+     *
+     * @param string template slug $slug
+     *
+     * @return agenda template
+     * @throws AgendaTemplateNotFoundException
+     */
+    public function getAgendaTemplate(string $slug): AgendaTemplate
     {
         try {
-            $response = $this->client->get("agenda-templates/{$id}");
+            $response = $this->client->get("agenda-templates/{$slug}");
         } catch (RequestException $exception) {
             throw new AgendaTemplateNotFoundException();
         }

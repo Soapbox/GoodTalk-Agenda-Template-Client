@@ -19,11 +19,11 @@ class ClientTest extends TestCase
     public function it_can_get_an_agenda_template()
     {
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/1')
+        $handler->get('agenda-templates/scrum-meeting')
             ->respondWith(new AgendaTemplateResponse());
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate(1);
+        $agendaTemplate = $client->getAgendaTemplate('scrum-meeting');
         $this->assertInstanceOf(AgendaTemplate::class, $agendaTemplate);
     }
 
@@ -35,11 +35,11 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/99')
+        $handler->get('agenda-templates/idea')
             ->respondWith(404);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate(99);
+        $agendaTemplate = $client->getAgendaTemplate('idea');
     }
 
     /**
@@ -50,10 +50,10 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/99')
+        $handler->get('agenda-templates/scrum-meeting')
             ->respondWith(500);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate(99);
+        $agendaTemplate = $client->getAgendaTemplate('scrum-meeting');
     }
 }

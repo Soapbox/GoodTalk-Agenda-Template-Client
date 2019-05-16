@@ -24,6 +24,7 @@ class SimpleAgendaTemplateResponse extends Response
                 "attributes" => [
                     "name" => "breh",
                     "channel-type" => "one-on-one",
+                    "slug" => "scrum-meeting",
                     "short-description" => "more breh",
                     "long-description" => "even more breh",
                     "mascot" => ":pig:",

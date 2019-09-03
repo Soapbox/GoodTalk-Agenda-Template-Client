@@ -2,9 +2,11 @@
 
 namespace SoapBox\AgendaTemplateClient;
 
+use Illuminate\Http\Response;
 use JSHayes\FakeRequests\ClientFactory;
 use GuzzleHttp\Exception\RequestException;
 use SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate;
+use SoapBox\AgendaTemplateClient\Exceptions\ItemNotFoundException;
 use SoapBox\AgendaTemplateClient\Exceptions\AgendaTemplateNotFoundException;
 
 class Client
@@ -56,4 +58,14 @@ class Client
 
         return (new Parser($response->getBody()->getContents()))->getAgendaTemplate();
     }
+
+    public function getRecentlyAddedOrUpdatedItems(string $date)
+     {
+         try {
+             $response = $this->client->get("items?date={$date}");
+         } catch (RequestException $exception) {
+             throw new ItemNotFoundException();
+         }
+         return json_decode($response->getBody()->getContents(), true);
+     }
 }

@@ -2,6 +2,7 @@
 
 namespace SoapBox\AgendaTemplateClient;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Art4\JsonApiClient\V1\ResourceItem;
 use SoapBox\AgendaTemplateClient\RemoteResources\Resource;
@@ -23,7 +24,7 @@ class Factory
     public function makeResource(string $type, ResourceItem $resourceItem, Collection $mappedIncluded)
     {
 
-        $class = array_get($this->map, $type, Resource::class);
+        $class = Arr::get($this->map, $type, Resource::class);
         return new $class($resourceItem, $mappedIncluded);
 
     }

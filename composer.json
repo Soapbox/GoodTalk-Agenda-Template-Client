@@ -3,16 +3,10 @@
     "description": "Client to communicate with the SoapBox Agenda Template Service",
     "type": "library",
     "require": {
-        "jshayes/fake-requests": "dev-feature/add-laravel-6-support#f6e6be00a5423dcdd849b8bed0a44fc466035a43",
+        "jshayes/fake-requests": "^3.0",
         "art4/json-api-client": "^0.10.0",
         "illuminate/support": "^6.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/soapbox/fake-requests"
-        }
-    ],
     "license": "MIT",
     "authors": [
         {

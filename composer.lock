@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b1c54dcb03532c8ac0793ec1ea4450c",
+    "content-hash": "719bb74026b4d5a133eb7d43f58a456d",
     "packages": [
         {
             "name": "art4/json-api-client",
@@ -543,16 +543,16 @@
         },
         {
             "name": "jshayes/fake-requests",
-            "version": "dev-feature/add-laravel-6-support",
+            "version": "v3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Soapbox/fake-requests.git",
-                "reference": "f6e6be00a5423dcdd849b8bed0a44fc466035a43"
+                "url": "https://github.com/jshayes/fake-requests.git",
+                "reference": "cd722ce257ef5a3e8b580729dd6ebc44909603cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Soapbox/fake-requests/zipball/f6e6be00a5423dcdd849b8bed0a44fc466035a43",
-                "reference": "f6e6be00a5423dcdd849b8bed0a44fc466035a43",
+                "url": "https://api.github.com/repos/jshayes/fake-requests/zipball/cd722ce257ef5a3e8b580729dd6ebc44909603cd",
+                "reference": "cd722ce257ef5a3e8b580729dd6ebc44909603cd",
                 "shasum": ""
             },
             "require": {
@@ -571,11 +571,7 @@
                     "JSHayes\\FakeRequests\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -586,10 +582,7 @@
                 }
             ],
             "description": "A package to make it easier to test with guzzle.",
-            "support": {
-                "source": "https://github.com/Soapbox/fake-requests/tree/feature/add-laravel-6-support"
-            },
-            "time": "2020-01-15T22:06:23+00:00"
+            "time": "2020-01-16T02:52:42+00:00"
         },
         {
             "name": "laravel/framework",
@@ -740,16 +733,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "74e08793c41c72c8ed7a22df803f2ffcaf77efb7"
+                "reference": "34cf4ddb3892c715ae785c880e6691d839cff88d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/74e08793c41c72c8ed7a22df803f2ffcaf77efb7",
-                "reference": "74e08793c41c72c8ed7a22df803f2ffcaf77efb7",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/34cf4ddb3892c715ae785c880e6691d839cff88d",
+                "reference": "34cf4ddb3892c715ae785c880e6691d839cff88d",
                 "shasum": ""
             },
             "require": {
@@ -807,7 +800,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2020-01-15T03:32:39+00:00"
+            "time": "2020-01-16T01:18:13+00:00"
         },
         {
             "name": "league/commonmark-ext-table",
@@ -4812,9 +4805,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jshayes/fake-requests": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

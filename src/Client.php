@@ -5,6 +5,7 @@ namespace SoapBox\AgendaTemplateClient;
 use JSHayes\FakeRequests\ClientFactory;
 use GuzzleHttp\Exception\RequestException;
 use SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate;
+use SoapBox\SignedRequests\Middlewares\Guzzle\GenerateSignature;
 use SoapBox\AgendaTemplateClient\Exceptions\ItemNotFoundException;
 use SoapBox\SignedRequests\Configurations\RepositoryConfiguration;
 use SoapBox\AgendaTemplateClient\Exceptions\AgendaTemplateNotFoundException;

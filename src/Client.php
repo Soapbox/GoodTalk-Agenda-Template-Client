@@ -2,11 +2,11 @@
 
 namespace SoapBox\AgendaTemplateClient;
 
-use Illuminate\Http\Response;
 use JSHayes\FakeRequests\ClientFactory;
 use GuzzleHttp\Exception\RequestException;
 use SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate;
 use SoapBox\AgendaTemplateClient\Exceptions\ItemNotFoundException;
+use SoapBox\SignedRequests\Configurations\RepositoryConfiguration;
 use SoapBox\AgendaTemplateClient\Exceptions\AgendaTemplateNotFoundException;
 
 class Client
@@ -38,6 +38,10 @@ class Client
             'connect_timeout' => config('agenda-template-client.http.connect_timeout'),
             'timeout' => config('agenda-template-client.http.timeout'),
         ]);
+
+        $configuration = resolve(RepositoryConfiguration::class);
+        $middleware = new GenerateSignature($configuration);
+        $this->client->getConfig('handler')->push($middleware, 'generate_signature');
     }
 
     /**
@@ -60,12 +64,31 @@ class Client
     }
 
     public function getRecentlyAddedOrUpdatedItems(string $date)
-     {
-         try {
-             $response = $this->client->get("items?date={$date}");
-         } catch (RequestException $exception) {
-             throw new ItemNotFoundException();
-         }
-         return json_decode($response->getBody()->getContents(), true);
-     }
+    {
+        try {
+            $response = $this->client->get("items?date={$date}");
+        } catch (RequestException $exception) {
+            throw new ItemNotFoundException();
+        }
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Create an agenda template using agenda template API
+     *
+     * @param string template slug $slug
+     *
+     * @return agenda template
+     * @throws AgendaTemplateNotFoundException
+     */
+    public function createAgendaTemplate(int $userId, int $soapboxId, array $data): Response
+    {
+        $data['soapbox-user-id'] = $userId;
+        $data['soapbox-id'] = $soapboxId;
+        try {
+            return  $this->client->post("agenda-templates/", ['json' => $data]);
+        } catch (RequestException $exception) {
+            throw new AgendaTemplateNotFoundException();
+        }
+    }
 }

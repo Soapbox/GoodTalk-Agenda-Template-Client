@@ -48,17 +48,19 @@ class Client
     }
 
     /**
-     * Retrieve an agenda using slug using agenda template API
+     * Retrieve an agenda using slug or Id using agenda template API
      *
-     * @param string template slug $slug
+     * @param int $userId
+     * @param string|int $slug
      *
-     * @return agenda template
+     * @return \SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate
      * @throws AgendaTemplateNotFoundException
      */
-    public function getAgendaTemplate(string $slug): AgendaTemplate
+    public function getAgendaTemplateModel(int $userId, $slugOrId): AgendaTemplate
     {
+        $data = ['soapbox-user-id' => $userId];
         try {
-            $response = $this->client->get("agenda-templates/{$slug}");
+            $response = $this->client->get("custom-templates/{$slugOrId}", ['json' => $data]);
         } catch (RequestException $exception) {
             throw new AgendaTemplateNotFoundException();
         }
@@ -107,6 +109,44 @@ class Client
         }
 
         return new Response($response->getBody()->getContents(), $response->getStatusCode());
+    }
+
+    /**
+     * Retrieve an agenda using slug or Id using agenda template API
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the agenda template service
+     *
+     * @param int $userId
+     * @param string|int $slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAgendaTemplate(int $userId, $slugOrId): Response
+    {
+        $data = ['soapbox-user-id' => $userId];
+
+        return $this->makeRequestAndReturnResponse("get", "custom-templates/{$slugOrId}", $data);
+    }
+
+    /**
+     * Retrieve an agenda templates based on the query string
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the agenda template service
+     *
+     * @param int $userId
+     * @param string $queryString
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAgendaTemplates(int $userId, string $queryString = null): Response
+    {
+        $data = ['soapbox-user-id' => $userId];
+
+        $url = $queryString ? "custom-templates?{$queryString}" : "custom-templates";
+
+        return $this->makeRequestAndReturnResponse("get", "custom-templates?{$queryString}", $data);
     }
 
     /**
@@ -160,9 +200,9 @@ class Client
      *
      * @return \Illuminate\Http\Response
      */
-    public function deleteAgendaTemplate(int $userId, int $agendaTemplateId, array $data): Response
+    public function deleteAgendaTemplate(int $userId, int $agendaTemplateId): Response
     {
-        $data['soapbox-user-id'] = $userId;
+        $data = ['soapbox-user-id' => $userId];
 
         return $this->makeRequestAndReturnResponse("delete", "agenda-templates/{$agendaTemplateId}", $data);
     }
@@ -202,7 +242,7 @@ class Client
     {
         $data['soapbox-user-id'] = $userId;
 
-        return $this->makeRequestAndReturnResponse("put", "item/{$itemId}", $data);
+        return $this->makeRequestAndReturnResponse("put", "items/{$itemId}", $data);
     }
 
     /**
@@ -217,10 +257,10 @@ class Client
      *
      * @return \Illuminate\Http\Response
      */
-    public function deleteAgendaTemplateItem(int $userId, int $itemId, array $data): Response
+    public function deleteAgendaTemplateItem(int $userId, int $itemId): Response
     {
-        $data['soapbox-user-id'] = $userId;
+        $data = ['soapbox-user-id' => $userId];
 
-        return $this->makeRequestAndReturnResponse("delete", "item/{$itemId}", $data);
+        return $this->makeRequestAndReturnResponse("delete", "items/{$itemId}", $data);
     }
 }

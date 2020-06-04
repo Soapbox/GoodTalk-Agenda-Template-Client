@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Orchestra\Testbench\TestCase;
+use Illuminate\Support\Facades\Config;
 use SoapBox\AgendaTemplateClient\Client;
 use Tests\Doubles\Responses\AgendaTemplateResponse;
 use JSHayes\FakeRequests\Traits\Laravel\FakeRequests;
@@ -14,6 +15,18 @@ use SoapBox\AgendaTemplateClient\RemoteResources\MeetingRatingQuestion;
 class AgendaTemplateTest extends TestCase
 {
     use FakeRequests;
+
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setup();
+        $configValues = require resource_path("../../../../../config/agenda-template-client.php");
+        Config::set('agenda-template-client', $configValues);
+    }
 
     private function assertAgendaTemplateAttributes(AgendaTemplate $agendaTemplate)
     {
@@ -36,11 +49,11 @@ class AgendaTemplateTest extends TestCase
         $response = new SimpleAgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/scrum-meeting')
+        $handler->get('custom-templates/scrum-meeting')
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate('scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
 
         $this->assertInstanceOf(AgendaTemplate::class, $agendaTemplate);
 
@@ -58,11 +71,11 @@ class AgendaTemplateTest extends TestCase
         $response = new AgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/scrum-meeting')
+        $handler->get('custom-templates/scrum-meeting')
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate('scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
 
         $meetingRatingQuestion = $agendaTemplate->getMeetingRatingQuestion();
 
@@ -75,16 +88,16 @@ class AgendaTemplateTest extends TestCase
             [
                 [
                     "emoji" => ":smile:",
-                    "text" => "Excellent"
+                    "text" => "Excellent",
                 ],
                 [
                     "emoji" => ":slightly_smiling_face:",
-                    "text" => "Good"
+                    "text" => "Good",
                 ],
                 [
                     "emoji" => ":neutral_face:",
-                    "text" => "Needs improvement"
-                ]
+                    "text" => "Needs improvement",
+                ],
             ]
         );
         $this->assertEquals($meetingRatingQuestion->created_at, '2019-04-09 19:11:18');
@@ -99,11 +112,11 @@ class AgendaTemplateTest extends TestCase
         $response = new AgendaTemplateResponse();
 
         $handler = $this->fakeRequests();
-        $handler->get('agenda-templates/scrum-meeting')
+        $handler->get('custom-templates/scrum-meeting')
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplate('scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
 
         $items = $agendaTemplate->getAgendaItems();
 

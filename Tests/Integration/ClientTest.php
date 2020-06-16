@@ -40,11 +40,8 @@ class ClientTest extends TestCase
     public function it_can_get_an_agenda_template()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates/scrum-meeting')
-            ->inspectRequest(function ($request) {
-                $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
-            })->respondWith(new AgendaTemplateResponse());
+        $handler->get('custom-templates/scrum-meeting?soapbox-user-id=1')
+            ->respondWith(new AgendaTemplateResponse());
 
         $client = resolve(Client::class);
         $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
@@ -59,7 +56,7 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates/idea')
+        $handler->get('custom-templates/idea?soapbox-user-id=1')
             ->respondWith(404);
 
         $client = resolve(Client::class);
@@ -74,7 +71,7 @@ class ClientTest extends TestCase
         $this->expectException(AgendaTemplateNotFoundException::class);
 
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates/scrum-meeting')
+        $handler->get('custom-templates/scrum-meeting?soapbox-user-id=1')
             ->respondWith(500);
 
         $client = resolve(Client::class);
@@ -144,11 +141,8 @@ class ClientTest extends TestCase
     public function it_can_get_an_agenda_template_response()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates/scrum-meeting')
-            ->inspectRequest(function ($request) {
-                $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
-            })->respondWith(new AgendaTemplateResponse());
+        $handler->get('custom-templates/scrum-meeting?soapbox-user-id=1')
+            ->respondWith(new AgendaTemplateResponse());
 
         $client = resolve(Client::class);
         $response = $client->getAgendaTemplate(1, 'scrum-meeting');
@@ -164,7 +158,7 @@ class ClientTest extends TestCase
     public function any_error_response_is_returned_when_fetching_a_template()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates/idea')
+        $handler->get('custom-templates/idea?soapbox-user-id=1')
             ->respondWith(422);
 
         $client = resolve(Client::class);
@@ -178,11 +172,8 @@ class ClientTest extends TestCase
     public function it_can_fetch_agenda_templates_without_query_params()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates')
-            ->inspectRequest(function ($request) {
-                $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
-            })->respondWith(200);
+        $handler->get('custom-templates?soapbox-user-id=1')
+            ->respondWith(200);
 
         $client = resolve(Client::class);
         $response = $client->getAgendaTemplates(1);
@@ -196,11 +187,8 @@ class ClientTest extends TestCase
     public function it_can_fetch_agenda_templates_with_the_correct_query_params()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates?filter%5Btype%5D=one-on-one&filter%5Bvisibility%5D=public')
-            ->inspectRequest(function ($request) {
-                $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
-            })->respondWith(200);
+        $handler->get('custom-templates?filter%5Btype%5D=one-on-one&filter%5Bvisibility%5D=public&soapbox-user-id=1')
+            ->respondWith(200);
 
         $client = resolve(Client::class);
         $response = $client->getAgendaTemplates(1, 'filter[type]=one-on-one&filter[visibility]=public');
@@ -214,7 +202,7 @@ class ClientTest extends TestCase
     public function any_error_response_is_returned_when_fetching_agenda_templates()
     {
         $handler = $this->fakeRequests();
-        $handler->get('custom-templates')
+        $handler->get('custom-templates?soapbox-user-id=1')
             ->respondWith(422);
 
         $client = resolve(Client::class);

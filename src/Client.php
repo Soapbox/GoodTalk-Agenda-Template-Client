@@ -134,7 +134,7 @@ class Client
      *
      * @param int $userId
      * @param string $queryString
-     *wat
+     *
      * @return \Illuminate\Http\Response
      */
     public function getAgendaTemplates(int $userId, string $queryString = null): Response

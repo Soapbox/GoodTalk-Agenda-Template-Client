@@ -259,4 +259,42 @@ class Client
 
         return $this->makeRequestAndReturnResponse("delete", "items/{$itemId}", $data);
     }
+
+    /**
+     * Retrieve a suggested goal using the agenda template API
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the suggestion provider service
+     *
+     * @param int $suggestedGoalId
+     * @param string $queryString
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSuggestedGoal(int $suggestedGoalId,  string $queryString = null): Response
+    {
+        $baseUrl = "suggested-goals/{$suggestedGoalId}";
+        $url = $queryString ? $baseUrl . "?{$queryString}" : $baseUrl;
+        
+        return $this->makeRequestAndReturnResponse("get", "{$url}", []);
+    }
+
+    /**
+     * Retrieve suggested goals based on the query string
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the suggestion provider service
+     *
+     * @param int $departmentId
+     * @param string $queryString
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSuggestedGoals(int $departmentId, string $queryString = null): Response
+    {
+        $baseUrl = "departments/{$departmentId}/suggested-goals";
+        $url = $queryString ? $baseUrl . "?{$queryString}" : $baseUrl;
+
+        return $this->makeRequestAndReturnResponse("get", "{$url}", []);
+    }
 }

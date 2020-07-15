@@ -6,10 +6,13 @@ use Illuminate\Http\Response;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\Config;
 use SoapBox\AgendaTemplateClient\Client;
+use Tests\Doubles\Responses\SuggestedGoalResponse;
 use Tests\Doubles\Responses\AgendaTemplateResponse;
 use JSHayes\FakeRequests\Traits\Laravel\FakeRequests;
+use SoapBox\AgendaTemplateClient\RemoteResources\SuggestedGoal;
 use SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate;
 use Tests\Doubles\Responses\RecentlyAddedOrUpdatedItemsResponse;
+use SoapBox\AgendaTemplateClient\Exceptions\GoalNotFoundException;
 use SoapBox\AgendaTemplateClient\Exceptions\ItemNotFoundException;
 use SoapBox\AgendaTemplateClient\Exceptions\AgendaTemplateNotFoundException;
 
@@ -404,6 +407,186 @@ class ClientTest extends TestCase
 
         $client = resolve(Client::class);
         $response = $client->deleteAgendaTemplateItem(1, 2);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_a_suggested_goal_response()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1')
+            ->respondWith(new SuggestedGoalResponse());
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoal(1);
+
+        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertEquals($this->getResponseData($response)['id'], 1);
+        $this->assertEquals($this->getResponseData($response)['type'], 'suggested-goal');
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_a_suggested_goal_with_query_params()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1?include=milestones')
+            ->respondWith(new SuggestedGoalResponse());
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoal(1, 'include=milestones');
+
+        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertEquals($this->getResponseData($response)['id'], 1);
+        $this->assertEquals($this->getResponseData($response)['type'], 'suggested-goal');
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_fetching_a_suggested_goal()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoal(1);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_a_suggested_goal_model()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1')
+            ->respondWith(new SuggestedGoalResponse());
+
+        $client = resolve(Client::class);
+        $suggestedGoal = $client->getSuggestedGoalModel(1);
+
+        $this->assertInstanceOf(SuggestedGoal::class, $suggestedGoal);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_a_suggested_goal_model_with_query_params()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1?include=milestones')
+            ->respondWith(new SuggestedGoalResponse());
+
+        $client = resolve(Client::class);
+        $suggestedGoal = $client->getSuggestedGoalModel(1, 'include=milestones');
+
+        $this->assertInstanceOf(SuggestedGoal::class, $suggestedGoal);
+    }
+
+    /**
+     * @test
+     */
+    public function a_goal_not_found_exception_is_thrown_when_an_error_is_returned_when_fetching_a_suggested_goal_model()
+    {
+        $this->expectException(GoalNotFoundException::class);
+        $handler = $this->fakeRequests();
+        $handler->get('suggested-goals/1')
+            ->respondWith(404);
+
+        $client = resolve(Client::class);
+        $client->getSuggestedGoalModel(1);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_fetch_goals_in_a_department()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments/1/suggested-goals')
+            ->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoals(1);
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_fetch_goals_in_a_department_with_query_params()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments/1/suggested-goals?include=milestones')
+            ->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoals(1, 'include=milestones');
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_fetching_a_suggested_goals_in_a_department()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments/1/suggested-goals')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->getSuggestedGoals(1);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_fetch_departments()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments')
+            ->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->getDepartments();
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_departments_with_query_params()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments?include=milestones')
+            ->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->getDepartments('include=milestones');
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_fetching_departments()
+    {
+        $handler = $this->fakeRequests();
+        $handler->get('departments')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->getDepartments();
         $this->assertEquals($response->getStatusCode(), 422);
     }
 }

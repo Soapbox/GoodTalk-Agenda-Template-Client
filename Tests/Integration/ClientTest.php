@@ -564,7 +564,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function it_can_departments_with_query_params()
+    public function it_can_fetch_departments_with_query_params()
     {
         $handler = $this->fakeRequests();
         $handler->get('departments?include=milestones')

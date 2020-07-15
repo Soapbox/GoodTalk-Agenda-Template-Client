@@ -29,7 +29,7 @@ class SuggestedGoalTest extends TestCase
     /**
      * @test
      */
-    public function it_correctly_gets_a_suggested_goal_with_mile_stones()
+    public function it_correctly_gets_a_suggested_goal_with_milestones()
     {
         $handler = $this->fakeRequests();
         $handler->get('suggested-goals/1?include=milestones')

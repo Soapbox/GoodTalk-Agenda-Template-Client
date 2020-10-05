@@ -589,4 +589,102 @@ class ClientTest extends TestCase
         $response = $client->getDepartments();
         $this->assertEquals($response->getStatusCode(), 422);
     }
+
+        /**
+     * @test
+     */
+    public function it_can_create_an_agenda_template_section_with_the_correct_data()
+    {
+        $handler = $this->fakeRequests();
+        $handler->post('agenda-templates/2/sections')
+            ->inspectRequest(function ($request) {
+                $content = json_decode((string) $request->getBody(), true);
+                $this->assertEquals($content['soapbox-user-id'], 1);
+                $this->assertEquals($content['test'], 'test data');
+            })->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->createAgendaTemplateSection(1, 2, ['test' => 'test data']);
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_creating_an_agenda_template_section()
+    {
+        $handler = $this->fakeRequests();
+        $handler->post('agenda-templates/2/section')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->createAgendaTemplateSection(1, 2, []);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_update_an_agenda_template_section_with_the_correct_data()
+    {
+        $handler = $this->fakeRequests();
+        $handler->put('sections/2')
+            ->inspectRequest(function ($request) {
+                $content = json_decode((string) $request->getBody(), true);
+                $this->assertEquals($content['soapbox-user-id'], 1);
+                $this->assertEquals($content['test'], 'test data');
+            })->respondWith(200);
+
+        $client = resolve(Client::class);
+        $response = $client->updateAgendaTemplateSection(1, 2, ['test' => 'test data']);
+
+        $this->assertEquals($response->getStatusCode(), 200);
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_updating_an_agenda_template_section()
+    {
+        $handler = $this->fakeRequests();
+        $handler->put('sections/2')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->updateAgendaTemplateSection(1, 2, []);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_delete_an_agenda_template_section()
+    {
+        $handler = $this->fakeRequests();
+        $handler->delete('sections/2')
+            ->inspectRequest(function ($request) {
+                $content = json_decode((string) $request->getBody(), true);
+                $this->assertEquals($content['soapbox-user-id'], 1);
+            })->respondWith(204);
+
+        $client = resolve(Client::class);
+        $response = $client->deleteAgendaTemplateSection(1, 2);
+
+        $this->assertEquals($response->getStatusCode(), 204);
+    }
+
+    /**
+     * @test
+     */
+    public function any_error_response_is_returned_when_deleting_an_agenda_template_section()
+    {
+        $handler = $this->fakeRequests();
+        $handler->delete('sections/2')
+            ->respondWith(422);
+
+        $client = resolve(Client::class);
+        $response = $client->deleteAgendaTemplateSection(1, 2);
+        $this->assertEquals($response->getStatusCode(), 422);
+    }
 }

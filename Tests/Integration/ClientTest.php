@@ -590,7 +590,7 @@ class ClientTest extends TestCase
         $this->assertEquals($response->getStatusCode(), 422);
     }
 
-        /**
+    /**
      * @test
      */
     public function it_can_create_an_agenda_template_section_with_the_correct_data()

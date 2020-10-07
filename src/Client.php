@@ -62,7 +62,7 @@ class Client
     public function getAgendaTemplateModel(int $userId, int $soapboxId, $slugOrId): AgendaTemplate
     {
         try {
-            $response = $this->client->get("custom-templates/{$slugOrId}?soapbox-user-id={$userId}&soapbox-id={$soapboxId}", ['json' => []]);
+            $response = $this->client->get("custom-templates/{$slugOrId}?soapbox-id={$soapboxId}&soapbox-user-id={$userId}", ['json' => []]);
         } catch (RequestException $exception) {
             throw new AgendaTemplateNotFoundException();
         }
@@ -127,7 +127,7 @@ class Client
      */
     public function getAgendaTemplate(int $userId, int $soapboxId, $slugOrId): Response
     {
-        return $this->makeRequestAndReturnResponse("get", "custom-templates/{$slugOrId}?soapbox-user-id={$userId}&soapbox-id={$soapboxId}", []);
+        return $this->makeRequestAndReturnResponse("get", "custom-templates/{$slugOrId}?soapbox-id={$soapboxId}&soapbox-user-id={$userId}", []);
     }
 
     /**
@@ -145,7 +145,7 @@ class Client
     public function getAgendaTemplates(int $userId, int $soapboxId, string $queryString = null): Response
     {
         $url = $queryString ? "custom-templates?{$queryString}&" : "custom-templates?";
-        $url = $url . "soapbox-user-id={$userId}&soapbox-id={$soapboxId}";
+        $url = $url . "soapbox-id={$soapboxId}&soapbox-user-id={$userId}";
 
         return $this->makeRequestAndReturnResponse("get", "$url", []);
     }

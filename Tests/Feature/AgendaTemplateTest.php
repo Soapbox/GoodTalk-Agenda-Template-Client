@@ -53,7 +53,7 @@ class AgendaTemplateTest extends TestCase
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 2, 'scrum-meeting');
 
         $this->assertInstanceOf(AgendaTemplate::class, $agendaTemplate);
 
@@ -75,7 +75,7 @@ class AgendaTemplateTest extends TestCase
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 2, 'scrum-meeting');
 
         $meetingRatingQuestion = $agendaTemplate->getMeetingRatingQuestion();
 
@@ -116,7 +116,7 @@ class AgendaTemplateTest extends TestCase
             ->respondWith($response);
 
         $client = resolve(Client::class);
-        $agendaTemplate = $client->getAgendaTemplateModel(1, 'scrum-meeting');
+        $agendaTemplate = $client->getAgendaTemplateModel(1, 2, 'scrum-meeting');
 
         $items = $agendaTemplate->getAgendaItems();
 

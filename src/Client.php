@@ -263,6 +263,63 @@ class Client
     }
 
     /**
+     * Create an agenda template section using agenda template API
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the agenda template service
+     *
+     * @param int $userId
+     * @param int $agendaTemplateId
+     * @param int $data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createAgendaTemplateSection(int $userId, int $agendaTemplateId, array $data): Response
+    {
+        $data['soapbox-user-id'] = $userId;
+
+        return $this->makeRequestAndReturnResponse("post", "agenda-templates/{$agendaTemplateId}/sections", $data);
+    }
+
+    /**
+     * Update an agenda template section using agenda template API
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the agenda template service
+     *
+     * @param int $userId
+     * @param int $sectionId
+     * @param int $data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAgendaTemplateSection(int $userId, int $sectionId, array $data): Response
+    {
+        $data['soapbox-user-id'] = $userId;
+
+        return $this->makeRequestAndReturnResponse("put", "sections/{$sectionId}", $data);
+    }
+
+    /**
+     * Delete an agenda template section using agenda template API
+     *
+     * @throws \GuzzleHttp\Exception\RequestException
+     * Thrown if a response was not returned from the agenda template service
+     *
+     * @param int $userId
+     * @param int $sectionId
+     * @param int $data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAgendaTemplateSection(int $userId, int $sectionId): Response
+    {
+        $data = ['soapbox-user-id' => $userId];
+
+        return $this->makeRequestAndReturnResponse("delete", "sections/{$sectionId}", $data);
+    }
+
+    /**
      * Retrieve a suggested goal using the agenda template API and return the model
      *
      * @throws \GuzzleHttp\Exception\RequestException

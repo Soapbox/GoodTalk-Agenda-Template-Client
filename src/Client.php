@@ -53,15 +53,16 @@ class Client
      * Retrieve an agenda using slug or Id using agenda template API
      *
      * @param int $userId
+     * @param int $soapboxId
      * @param string|int $slug
      *
      * @return \SoapBox\AgendaTemplateClient\RemoteResources\AgendaTemplate
      * @throws AgendaTemplateNotFoundException
      */
-    public function getAgendaTemplateModel(int $userId, $slugOrId): AgendaTemplate
+    public function getAgendaTemplateModel(int $userId, int $soapboxId, $slugOrId): AgendaTemplate
     {
         try {
-            $response = $this->client->get("custom-templates/{$slugOrId}?soapbox-user-id={$userId}", ['json' => []]);
+            $response = $this->client->get("custom-templates/{$slugOrId}?soapbox-user-id={$userId}&soapbox-id={$soapboxId}", ['json' => []]);
         } catch (RequestException $exception) {
             throw new AgendaTemplateNotFoundException();
         }
@@ -119,13 +120,14 @@ class Client
      * Thrown if a response was not returned from the agenda template service
      *
      * @param int $userId
+     * @param int $soapboxId
      * @param string|int $slug
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAgendaTemplate(int $userId, $slugOrId): Response
+    public function getAgendaTemplate(int $userId, int $soapboxId, $slugOrId): Response
     {
-        return $this->makeRequestAndReturnResponse("get", "custom-templates/{$slugOrId}?soapbox-user-id={$userId}", []);
+        return $this->makeRequestAndReturnResponse("get", "custom-templates/{$slugOrId}?soapbox-user-id={$userId}&soapbox-id={$soapboxId}", []);
     }
 
     /**
@@ -135,14 +137,15 @@ class Client
      * Thrown if a response was not returned from the agenda template service
      *
      * @param int $userId
+     * @param int $soapboxId
      * @param string $queryString
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAgendaTemplates(int $userId, string $queryString = null): Response
+    public function getAgendaTemplates(int $userId, int $soapboxId, string $queryString = null): Response
     {
         $url = $queryString ? "custom-templates?{$queryString}&" : "custom-templates?";
-        $url = $url . "soapbox-user-id={$userId}";
+        $url = $url . "soapbox-user-id={$userId}&soapbox-id={$soapboxId}";
 
         return $this->makeRequestAndReturnResponse("get", "$url", []);
     }

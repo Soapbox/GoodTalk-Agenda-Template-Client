@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "art4/json-api-client",
-            "version": "0.10.1",
+            "version": "0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Art4/json-api-client.git",
-                "reference": "95c6160058a085d30bac10cd7a00ed2fe77249f7"
+                "reference": "6cc819adad636b9aace6501444264c999f79298c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Art4/json-api-client/zipball/95c6160058a085d30bac10cd7a00ed2fe77249f7",
-                "reference": "95c6160058a085d30bac10cd7a00ed2fe77249f7",
+                "url": "https://api.github.com/repos/Art4/json-api-client/zipball/6cc819adad636b9aace6501444264c999f79298c",
+                "reference": "6cc819adad636b9aace6501444264c999f79298c",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,11 @@
                 "reader",
                 "validator"
             ],
-            "time": "2019-09-23T17:43:41+00:00"
+            "support": {
+                "issues": "https://github.com/Art4/json-api-client/issues",
+                "source": "https://github.com/Art4/json-api-client/tree/0.10.2"
+            },
+            "time": "2020-06-20T23:27:40+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -4864,5 +4868,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

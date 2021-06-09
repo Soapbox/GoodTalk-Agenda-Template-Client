@@ -3,10 +3,8 @@
 namespace SoapBox\AgendaTemplateClient\RemoteResources;
 
 use Illuminate\Support\Collection;
-use Art4\JsonApiClient\V1\Document;
 use Art4\JsonApiClient\V1\Attributes;
 use Art4\JsonApiClient\V1\ResourceItem;
-use SoapBox\AgendaTemplateClient\RemoteResources\Resource;
 
 class Resource
 {

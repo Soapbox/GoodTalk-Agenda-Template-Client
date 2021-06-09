@@ -6,5 +6,5 @@ use RuntimeException;
 
 class AgendaTemplateNotFoundException extends RuntimeException
 {
-
+    //
 }

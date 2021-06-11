@@ -10,7 +10,7 @@
     ],
     "require": {
         "jshayes/fake-requests": "^4.0",
-        "art4/json-api-client": "^0.10.0",
+        "art4/json-api-client": "^0.10.0 || ^1.0.0",
         "illuminate/support": "^7.0",
         "soapbox/signed-requests": "^4.0"
     },

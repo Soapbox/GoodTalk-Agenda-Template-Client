@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d55d6ccde5a3e832c76327c0ee8623b",
+    "content-hash": "4f06bdf62e3a8ba77d23a5f194f9507d",
     "packages": [
         {
             "name": "art4/json-api-client",
-            "version": "0.10.2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Art4/json-api-client.git",
-                "reference": "6cc819adad636b9aace6501444264c999f79298c"
+                "reference": "3e9aeec84793b402c3f9f4a6418b09b07469e8b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Art4/json-api-client/zipball/6cc819adad636b9aace6501444264c999f79298c",
-                "reference": "6cc819adad636b9aace6501444264c999f79298c",
+                "url": "https://api.github.com/repos/Art4/json-api-client/zipball/3e9aeec84793b402c3f9f4a6418b09b07469e8b0",
+                "reference": "3e9aeec84793b402c3f9f4a6418b09b07469e8b0",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.4.3 || ^6.0 || ^7.0"
+                "phpunit/phpunit": "^9"
             },
             "type": "library",
             "autoload": {
@@ -54,7 +54,7 @@
                 "reader",
                 "validator"
             ],
-            "time": "2020-06-20T23:27:40+00:00"
+            "time": "2021-03-05T08:30:35+00:00"
         },
         {
             "name": "doctrine/inflector",

@@ -218,17 +218,27 @@ class ClientTest extends TestCase
      */
     public function it_can_create_an_agenda_template_with_the_correct_data()
     {
+        $userData = [
+            'name' => 'name',
+            'email' => 'name@email.com',
+            'avatar' => 'https://avatar.com',
+            'soapbox-user-id' => 1,
+        ];
+
         $handler = $this->fakeRequests();
         $handler->post('agenda-templates')
             ->inspectRequest(function ($request) {
                 $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
+                $this->assertEquals($content['author-name'], $userData['name']);
+                $this->assertEquals($content['author-email'], $userData['email']);
+                $this->assertEquals($content['author-avatar'], $userData['avatar']);
+                $this->assertEquals($content['soapbox-user-id'], $userData['soapbox-user-id']);
                 $this->assertEquals($content['soapbox-id'], 10);
                 $this->assertEquals($content['test'], 'test data');
             })->respondWith(200);
 
         $client = resolve(Client::class);
-        $response = $client->createAgendaTemplate(1, 10, ['test' => 'test data']);
+        $response = $client->createAgendaTemplate($userData, 10, ['test' => 'test data']);
 
         $this->assertEquals($response->getStatusCode(), 200);
     }
@@ -252,16 +262,26 @@ class ClientTest extends TestCase
      */
     public function it_can_update_an_agenda_template_with_the_correct_data()
     {
+        $userData = [
+            'name' => 'name',
+            'email' => 'name@email.com',
+            'avatar' => 'https://avatar.com',
+            'soapbox-user-id' => 1,
+        ];
+
         $handler = $this->fakeRequests();
         $handler->put('agenda-templates/2')
             ->inspectRequest(function ($request) {
                 $content = json_decode((string) $request->getBody(), true);
-                $this->assertEquals($content['soapbox-user-id'], 1);
+                $this->assertEquals($content['author-name'], $userData['name']);
+                $this->assertEquals($content['author-email'], $userData['email']);
+                $this->assertEquals($content['author-avatar'], $userData['avatar']);
+                $this->assertEquals($content['soapbox-user-id'], $userData['soapbox-user-id']);
                 $this->assertEquals($content['test'], 'test data');
             })->respondWith(200);
 
         $client = resolve(Client::class);
-        $response = $client->updateAgendaTemplate(1, 2, ['test' => 'test data']);
+        $response = $client->updateAgendaTemplate($userData, 2, ['test' => 'test data']);
 
         $this->assertEquals($response->getStatusCode(), 200);
     }

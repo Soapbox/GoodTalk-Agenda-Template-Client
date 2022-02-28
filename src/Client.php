@@ -2,6 +2,7 @@
 
 namespace SoapBox\AgendaTemplateClient;
 
+use App\Users\User;
 use Illuminate\Http\Response;
 use Illuminate\Config\Repository;
 use JSHayes\FakeRequests\ClientFactory;
@@ -156,15 +157,18 @@ class Client
      * @throws \GuzzleHttp\Exception\RequestException
      * Thrown if a response was not returned from the agenda template service
      *
-     * @param int $userId
+     * @param array $userData
      * @param int $soapboxId
-     * @param int $data
+     * @param array $data
      *
      * @return \Illuminate\Http\Response
      */
-    public function createAgendaTemplate(int $userId, int $soapboxId, array $data): Response
+    public function createAgendaTemplate(array $userData, int $soapboxId, array $data): Response
     {
-        $data['soapbox-user-id'] = $userId;
+        $data['author-name'] = $userData['name'];
+        $data['author-email'] = $userData['email'];
+        $data['author-avatar'] = $userData['avatar'];
+        $data['soapbox-user-id'] = $userData['soapbox-user-id'];
         $data['soapbox-id'] = $soapboxId;
 
         return $this->makeRequestAndReturnResponse("post", "agenda-templates", $data);
@@ -176,15 +180,18 @@ class Client
      * @throws \GuzzleHttp\Exception\RequestException
      * Thrown if a response was not returned from the agenda template service
      *
-     * @param int $userId
+     * @param array $userData
      * @param int $agendaTemplateId
-     * @param int $data
+     * @param array $data
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateAgendaTemplate(int $userId, int $agendaTemplateId, array $data): Response
+    public function updateAgendaTemplate(array $userData, int $agendaTemplateId, array $data): Response
     {
-        $data['soapbox-user-id'] = $userId;
+        $data['author-name'] = $userData['name'];
+        $data['author-email'] = $userData['email'];
+        $data['author-avatar'] = $userData['avatar'];
+        $data['soapbox-user-id'] = $userData['soapbox-user-id'];
 
         return $this->makeRequestAndReturnResponse("put", "agenda-templates/{$agendaTemplateId}", $data);
     }
